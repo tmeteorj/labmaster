@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--Global configuration-->
+    <settings>
+        <!-- Use JDBC.getGeneratekeys -->
+        <setting name="useGeneratedKeys" value="true"/>
+
+        <!--
+            Use alias (default: true)
+            e.g. select name as title form table;
+        -->
+        <setting name="useColumnLabel" value="true"/>
+
+        <!--
+            Enable tranfer undersocre to camel
+            e.g. Table(create_time) to Entity(createTime)
+        -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+</configuration>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.tju.labmaster.dao.RoleMenuDao">
+
+    <!--Automatically generated, please do NOT edit! -->
+    <!-- labmaster.role_menu all columns -->
+    <sql id="SQL_COLUMN_LIST">
+        <![CDATA[
+            id AS id,  /* 主键 */
+            role_id AS roleId,  /* 角色ID */
+            menu_id AS menuId,  /* 菜单ID */
+            remark AS remark,  /* 备注 */
+            deleted_mark AS deletedMark,  /* 标记删除（1：有效，0：无效） */
+            meta_created AS metaCreated,  /* 创建时间 */
+            meta_updated AS metaUpdated  /* 更新时间 */
+        ]]>
+    </sql>
+
+    <!-- from cause -->
+    <sql id="SQL_FROM_CAUSE">
+        <![CDATA[
+        FROM role_menu
+        ]]>
+    </sql>
+
+    <!-- where cause -->
+    <sql id="SQL_WHERE_CAULSE">
+        <where>
+          <if test="id != null">
+              <![CDATA[AND id = #{id}]]> /* 主键 */
+          </if>
+          <if test="roleId != null">
+              <![CDATA[AND role_id = #{roleId}]]> /* 角色ID */
+          </if>
+          <if test="menuId != null">
+              <![CDATA[AND menu_id = #{menuId}]]> /* 菜单ID */
+          </if>
+          <if test="remark != null and remark != ''">
+              <![CDATA[AND remark = #{remark}]]> /* 备注 */
+          </if>
+          <if test="deletedMark != null">
+              <![CDATA[AND deleted_mark = #{deletedMark}]]> /* 标记删除（1：有效，0：无效） */
+          </if>
+          <if test="metaCreated != null">
+              <![CDATA[AND meta_created = #{metaCreated}]]> /* 创建时间 */
+          </if>
+          <if test="metaUpdated != null">
+              <![CDATA[AND meta_updated = #{metaUpdated}]]> /* 更新时间 */
+          </if>
+          <if test="extraMap != null">
+              <if test="extraMap.metaCreatedBegin != null and extraMap.metaCreatedBegin != ''">
+                  <![CDATA[AND meta_created >= STR_TO_DATE(#{extraMap.metaCreatedBegin},'%Y-%m-%d')]]>  /* 创建时间*/
+              </if>
+              <if test="extraMap.metaCreatedEnd != null and extraMap.metaCreatedEnd != ''">
+                  <![CDATA[AND meta_created <= STR_TO_DATE(#{extraMap.metaCreatedEnd},'%Y-%m-%d')]]>  /* 创建时间*/
+              </if>
+          </if>
+        </where>
+    </sql>
+
+    <!-- update cause -->
+    <sql id="SQL_UPDATE_COLUMNS">
+        <set>
+            <if test="id != null">
+                <![CDATA[id = #{id}]]>  /* 主键 */,
+            </if>
+            <if test="roleId != null">
+                <![CDATA[role_id = #{roleId}]]>  /* 角色ID */,
+            </if>
+            <if test="menuId != null">
+                <![CDATA[menu_id = #{menuId}]]>  /* 菜单ID */,
+            </if>
+            <if test="remark != null">
+                <![CDATA[remark = #{remark}]]>  /* 备注 */,
+            </if>
+            <if test="deletedMark != null">
+                <![CDATA[deleted_mark = #{deletedMark}]]>  /* 标记删除（1：有效，0：无效） */,
+            </if>
+            <if test="metaCreated != null">
+                <![CDATA[meta_created = #{metaCreated}]]>  /* 创建时间 */,
+            </if>
+            <if test="metaUpdated != null">
+                <![CDATA[meta_updated = #{metaUpdated}]]>  /* 更新时间 */,
+            </if>
+        </set>
+    </sql>
+
+    <!-- order by cause -->
+    <sql id="SQL_ORDERBY_CAUSE">
+        <if test="orderBy != null and orderBy != ''">
+            <![CDATA[ORDER BY ${orderBy} ${order}]]>
+        </if>
+        <if test="offset != null">
+            <![CDATA[LIMIT #{offset}, #{limit}]]>
+        </if>
+    </sql>
+
+    <!-- insert new entry -->
+    <insert id="insertEntry" parameterType="cn.edu.tju.labmaster.bean.RoleMenu">
+        INSERT INTO role_menu
+        (role_id, menu_id, remark, deleted_mark, meta_created, meta_updated )
+        VALUES
+        (#{roleId}, #{menuId}, #{remark}, #{deletedMark}, now(), now() )
+    </insert>
+
+    <!-- delete by ids -->
+    <delete id="deleteByKey" parameterType="java.lang.reflect.Array">
+        DELETE
+        <include refid="SQL_FROM_CAUSE"/>
+        WHERE id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- delete by condition -->
+    <delete id="deleteByCondition" parameterType="cn.edu.tju.labmaster.bean.RoleMenu">
+        DELETE 
+        <include refid="SQL_FROM_CAUSE"/>
+        <include refid="SQL_WHERE_CAULSE"/>
+    </delete>
+
+    <!-- update by condition -->
+    <update id="updateByKey" parameterType="cn.edu.tju.labmaster.bean.RoleMenu">
+        UPDATE role_menu
+        <include refid="SQL_UPDATE_COLUMNS"/>
+        WHERE <![CDATA[ id = #{id} ]]>
+    </update>
+
+    <!-- select by key -->
+    <select id="selectByKey" parameterType="long" resultType="cn.edu.tju.labmaster.bean.RoleMenu">
+        SELECT 
+        <include refid="SQL_COLUMN_LIST"/>
+        <include refid="SQL_FROM_CAUSE"/>
+        WHERE <![CDATA[ id = #{id} ]]>
+    </select>
+
+    <!-- select by condition -->
+    <select id="selectByCondition" parameterType="cn.edu.tju.labmaster.bean.RoleMenu"  resultType="cn.edu.tju.labmaster.bean.RoleMenu">
+        SELECT
+        <include refid="SQL_COLUMN_LIST"/>
+        <include refid="SQL_FROM_CAUSE"/>
+        <include refid="SQL_WHERE_CAULSE"/>
+        <include refid="SQL_ORDERBY_CAUSE"/>
+    </select>
+
+    <!-- select count by condition -->
+    <select id="selectCountByCondition"  parameterType="cn.edu.tju.labmaster.bean.RoleMenu" resultType="int">
+        SELECT COUNT(1) as count
+        <include refid="SQL_FROM_CAUSE"/>
+        <include refid="SQL_WHERE_CAULSE"/>
+    </select>
+
+    <!-- Customized Code Area Start -->
+
+    <!-- Customized Code Area End -->
+</mapper>
