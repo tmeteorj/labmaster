@@ -12,12 +12,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Controller
@@ -70,21 +72,19 @@ public class UserController extends BaseController<User, Long> {
     }
 
     @RequestMapping("/list")
-    @ResponseBody
-    public Response<Page<User>> list (HttpServletRequest request){
+    public String list (User user, Page<User> page, Model model){
         logger.info("list");
-        User user = JSON.parseObject(request.getParameter("user"), User.class);
-        Page<User> page = JSON.parseObject(request.getParameter("page"), new TypeReference<Page<User>>(){});
-        Response<Page<User>> response;
+//        User user = JSON.parseObject(request.getParameter("user"), User.class);
+//        Page<User> page = JSON.parseObject(request.getParameter("page"), new TypeReference<Page<User>>(){});
         try {
-            response = new Response<Page<User>>(baseList(user, page));
+            page = baseList(user, page);
+            model.addAttribute("page", page);
         } catch (Exception e) {
             logger.error(e.getMessage());
             e.printStackTrace();
-            response = new Response<Page<User>>(e.getMessage());
         }
-        logger.info("response: " + JSON.toJSONString(response));
-        return response;
+        logger.info("response: " + JSON.toJSONString(page));
+        return "user/userList";
     }
 
     @RequestMapping("/{id}/detail")

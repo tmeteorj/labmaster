@@ -167,7 +167,11 @@
         </dependency>
 
         <!-- Customized Code Area Start -->
-
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
         <!-- Customized Code Area End -->
     </dependencies>
 
